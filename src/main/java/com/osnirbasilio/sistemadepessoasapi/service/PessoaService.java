@@ -43,7 +43,7 @@ public class PessoaService {
     }
 
     public PessoaDTO pesquisaPorId(Long id) throws PessoaNaoEncontradaException {
-       Pessoa pessoa = repositorioPessoa.findById(id).orElseThrow(() -> new PessoaNaoEncontradaException(id));
+       Pessoa pessoa = verificaSeExiste(id);
 
         /*
         Optional<Pessoa> pessoaOpcional = repositorioPessoa.findById(id);
@@ -52,5 +52,16 @@ public class PessoaService {
         }*/
 
         return pessoaMapper.toDTO(pessoa);
+    }
+
+    public void deletar(Long id) throws PessoaNaoEncontradaException {
+        verificaSeExiste(id);
+
+        repositorioPessoa.deleteById(id);
+    }
+
+    private Pessoa verificaSeExiste(Long id) throws PessoaNaoEncontradaException{
+        return repositorioPessoa.findById(id)
+                .orElseThrow(() -> new PessoaNaoEncontradaException(id));
     }
 }
