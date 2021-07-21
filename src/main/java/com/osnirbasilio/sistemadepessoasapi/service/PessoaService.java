@@ -3,12 +3,14 @@ package com.osnirbasilio.sistemadepessoasapi.service;
 import com.osnirbasilio.sistemadepessoasapi.dto.request.PessoaDTO;
 import com.osnirbasilio.sistemadepessoasapi.dto.response.MensagemRespostaDTO;
 import com.osnirbasilio.sistemadepessoasapi.entity.Pessoa;
+import com.osnirbasilio.sistemadepessoasapi.exception.PessoaNaoEncontradaException;
 import com.osnirbasilio.sistemadepessoasapi.mapper.PessoaMapper;
 import com.osnirbasilio.sistemadepessoasapi.repository.RepositorioPessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,5 +40,17 @@ public class PessoaService {
        return todasPessoas.stream()
                .map(pessoaMapper::toDTO)
                .collect(Collectors.toList());
+    }
+
+    public PessoaDTO pesquisaPorId(Long id) throws PessoaNaoEncontradaException {
+       Pessoa pessoa = repositorioPessoa.findById(id).orElseThrow(() -> new PessoaNaoEncontradaException(id));
+
+        /*
+        Optional<Pessoa> pessoaOpcional = repositorioPessoa.findById(id);
+        if (pessoaOpcional.isEmpty()){
+            throw new PessoaNaoEncontradaException(id);
+        }*/
+
+        return pessoaMapper.toDTO(pessoa);
     }
 }

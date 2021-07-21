@@ -2,6 +2,7 @@ package com.osnirbasilio.sistemadepessoasapi.controller;
 
 import com.osnirbasilio.sistemadepessoasapi.dto.request.PessoaDTO;
 import com.osnirbasilio.sistemadepessoasapi.dto.response.MensagemRespostaDTO;
+import com.osnirbasilio.sistemadepessoasapi.exception.PessoaNaoEncontradaException;
 import com.osnirbasilio.sistemadepessoasapi.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,5 +31,10 @@ public class PessoaController {
     @GetMapping
     public List<PessoaDTO> listarTodos(){
         return  pessoaService.listarTodos();
+    }
+
+    @GetMapping("/{id}")
+    public PessoaDTO pesquisaPorId(@PathVariable Long id) throws PessoaNaoEncontradaException {
+        return pessoaService.pesquisaPorId(id);
     }
 }
