@@ -1,4 +1,4 @@
-package com.osnirbasilio.sistemadepessoasapi.dto;
+package com.osnirbasilio.sistemadepessoasapi.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
