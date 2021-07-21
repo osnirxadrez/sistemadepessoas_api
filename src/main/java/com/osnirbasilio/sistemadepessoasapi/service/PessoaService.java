@@ -6,6 +6,7 @@ import com.osnirbasilio.sistemadepessoasapi.entity.Pessoa;
 import com.osnirbasilio.sistemadepessoasapi.exception.PessoaNaoEncontradaException;
 import com.osnirbasilio.sistemadepessoasapi.mapper.PessoaMapper;
 import com.osnirbasilio.sistemadepessoasapi.repository.RepositorioPessoa;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +15,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PessoaService {
 
     private RepositorioPessoa repositorioPessoa;
 
     private final PessoaMapper pessoaMapper = PessoaMapper.INSTANCE;
-
-    @Autowired
-    public PessoaService(RepositorioPessoa repositorioPessoa){
-        this.repositorioPessoa = repositorioPessoa;
-    }
 
     public MensagemRespostaDTO criaPessoa(PessoaDTO pessoaDTO){
         Pessoa pessoaParaSalvar = pessoaMapper.toModel(pessoaDTO);
