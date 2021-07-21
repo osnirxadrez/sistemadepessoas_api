@@ -8,6 +8,9 @@ import com.osnirbasilio.sistemadepessoasapi.repository.RepositorioPessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PessoaService {
 
@@ -28,5 +31,12 @@ public class PessoaService {
                 .builder()
                 .mensagem("Criado pessoa com ID " + pessoaSalva.getId())
                 .build();
+    }
+
+    public List<PessoaDTO> listarTodos() {
+       List<Pessoa> todasPessoas = repositorioPessoa.findAll();
+       return todasPessoas.stream()
+               .map(pessoaMapper::toDTO)
+               .collect(Collectors.toList());
     }
 }
